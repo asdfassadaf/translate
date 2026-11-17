@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1c1c1c">
+<meta name="color-scheme" content="dark">
+<title>Dumbrava Translate</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <img class="logo" src="icons/icon-192.png" alt="" width="36" height="36">
+    <div class="brand">
+      <div class="name">Dumbrava</div>
+      <div class="mode">Прослушка</div>
+    </div>
+    <span id="pill" class="pill idle">Готов</span>
+    <button id="btnSettings" class="icon-btn" aria-label="Настройки">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>
+    </button>
+  </header>
+
+  <div class="langbar">
+    <span class="muted">Любой язык</span>
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M5 12h14m-5-5 5 5-5 5"/></svg>
+    <select id="lang" aria-label="Язык перевода"></select>
+  </div>
+
+  <main id="feed" class="feed" aria-live="polite">
+    <div id="empty" class="empty">
+      <div class="empty-ico">
+        <svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M3 14v-2a9 9 0 0 1 18 0v2M21 15a2 2 0 0 1-2 2h-1a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h3v4ZM3 15a2 2 0 0 0 2 2h1a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1H3v4Z"/></svg>
+      </div>
+      <p class="empty-title">Наденьте наушники</p>
+      <p class="empty-text">Нажмите «Слушать» — телефон услышит собеседника, а перевод прозвучит у вас в наушниках.</p>
+    </div>
+  </main>
+
+  <div class="stats">
+    <span><span class="cap">Задержка</span> <b id="statLat">—</b></span>
+    <span><span class="cap">Время</span> <b id="statTime">00:00</b></span>
+    <span><span class="cap">Сегодня</span> <b id="statToday">0 мин</b></span>
+  </div>
+
+  <footer class="dock">
+    <button id="btnListen" class="listen" aria-label="Слушать">
+      <span class="ring" aria-hidden="true"></span>
+      <svg class="ico-mic" viewBox="0 0 24 24" width="34" height="34" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3Z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 0 1-14 0M12 18v3"/></svg>
+      <svg class="ico-stop" viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2.5" fill="currentColor"/></svg>
+    </button>
+    <div id="listenLabel" class="listen-label">Слушать</div>
+  </footer>
+</div>
+
+<!-- Настройки -->
+<div id="sheet" class="sheet" hidden>
+  <div class="sheet-head">
+    <button id="btnClose" class="icon-btn" aria-label="Закрыть">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M15 18 9 12l6-6"/></svg>
+    </button>
+    <h1>Настройки</h1>
+  </div>
+  <div class="sheet-body">
+    <section id="keyCard" class="card">
+      <h2>Ключ Gemini</h2>
+      <p class="need-note">Вставьте ключ — и можно начинать</p>
+      <div class="key-row">
+        <input id="key" type="password" autocomplete="off" spellcheck="false" placeholder="AIza…" aria-label="API-ключ Gemini">
+        <button id="btnEye" class="icon-btn small" aria-label="Показать ключ">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+        </button>
+      </div>
+      <p class="hint">Ключ хранится только в этом телефоне. <a href="https://aistudio.google.com/api-keys" target="_blank" rel="noopener">Получить ключ</a></p>
+    </section>
+
+    <section class="card">
+      <h2>Перевод</h2>
+      <label class="field">Перевести на
+        <select id="lang2" aria-label="Язык перевода"></select>
+      </label>
+      <label class="field">Громкость перевода <b id="volVal">100%</b>
+        <input id="vol" type="range" min="0" max="200" step="5" value="100">
+      </label>
+      <label class="switch"><span>Показывать оригинал</span><input id="optOrig" type="checkbox" checked><i></i></label>
+    </section>
+
+    <section class="card">
+      <h2>Микрофон</h2>
+      <label class="switch"><span>Шумоподавление</span><input id="optNoise" type="checkbox" checked><i></i></label>
+      <label class="switch"><span>Без наушников<small>Микрофон замолкает, пока звучит перевод, — иначе телефон услышит сам себя</small></span><input id="optNoPhones" type="checkbox"><i></i></label>
+      <p class="hint">Если Bluetooth-наушники звучат глухо, как при звонке, — это телефон включил в них режим гарнитуры. Помогают проводные наушники или наушники с отдельным режимом «музыка».</p>
+    </section>
+
+    <section class="card">
+      <h2>Работа</h2>
+      <label class="switch"><span>Не давать экрану гаснуть<small>При выключенном экране телефон останавливает микрофон</small></span><input id="optWake" type="checkbox" checked><i></i></label>
+      <label class="field">Обновлять сессию Gemini каждые
+        <select id="rotate">
+          <option value="0">только по сигналу сервера</option><option value="5">5 мин</option>
+          <option value="8" selected>8 мин</option><option value="12">12 мин</option>
+        </select>
+      </label>
+      <button id="btnInstall" class="btn" hidden>Установить на главный экран</button>
+    </section>
+
+    <section class="card">
+      <h2>Расход сегодня</h2>
+      <p id="usageText" class="usage">—</p>
+      <p class="hint">Для этой модели в AI Studio лимит — 20 000 токенов в минуту; перевод тратит около 1 500. <a href="https://aistudio.google.com/usage?timeRange=last-28-days&amp;tab=rate-limit" target="_blank" rel="noopener">Лимиты в AI Studio</a></p>
+    </section>
+    <p class="ver">Dumbrava Translate · телефон · v1.0</p>
+  </div>
+</div>
+
+<div id="toast" class="toast" role="status" hidden></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
